@@ -1,0 +1,23 @@
+# eclipse items
+.project
+.settings
+.classpath
+
+IntelliJ Items
+.idea/
+*.iml
+
+# build artifacts
+.gradle/
+bin/
+out/
+
+
+#MAC junk
+.DS_Store
+
+
+# Ignore Gradle project-specific cache directory
+.gradle
+
+/build/
