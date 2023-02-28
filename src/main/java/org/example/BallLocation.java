@@ -43,7 +43,7 @@ public class BallLocation extends Point2D {
     /**
      * Inverts the velocity in the Y direction, causing the ball to switch between right and left.
      */
-    private void invertXVelocity(){
+    public void invertXVelocity(){
         xVelocity *= -1;
     }
 
@@ -51,7 +51,7 @@ public class BallLocation extends Point2D {
     /**
      * Inverts the velocity in the Y direction, causing the ball to switch between up and down.
      */
-    private void invertYVelocity(){
+    public void invertYVelocity(){
         yVelocity *= -1;
     }
 

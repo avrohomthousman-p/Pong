@@ -24,13 +24,58 @@ public class GamePanel extends JPanel {
         this.timer = new Timer(10, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO: make ball bounce if at the edge of the screen
+                if(isOffScreenLeftSide() || isOffScreenRightSide()){
+                    ballLocation.invertXVelocity();
+                }
+                else if (isOffScreenTop() || isOffScreenBottom()) {
+                    ballLocation.invertYVelocity();
+                }
                 ballLocation.move();
                 ball.setFrame(ballLocation, ballSize);
                 repaint();
             }
         });
 
+    }
+
+
+    /**
+     * Checks if the ball has gone off the right side of the screen;
+     *
+     * @return true if the ball has gone off the right side of the screen, or false otherwise;
+     */
+    private boolean isOffScreenRightSide(){
+        return ballLocation.getX() >= this.getWidth() - ballSize.getWidth();
+    }
+
+
+    /**
+     * Checks if the ball has gone off the left side of the screen;
+     *
+     * @return true if the ball has gone off the left side of the screen, or false otherwise;
+     */
+    private boolean isOffScreenLeftSide(){
+        return ballLocation.getX() <= 0;
+    }
+
+
+    /**
+     * Checks if the ball has gone off the top of the screen;
+     *
+     * @return true if the ball has gone off the top of the screen, or false otherwise;
+     */
+    private boolean isOffScreenTop(){
+        return ballLocation.getY() <= 0;
+    }
+
+
+    /**
+     * Checks if the ball has gone off the bottom of the screen;
+     *
+     * @return true if the ball has gone off the bottom of the screen, or false otherwise;
+     */
+    private boolean isOffScreenBottom(){
+        return ballLocation.getY() >= this.getHeight() - ballSize.getHeight();
     }
 
 
