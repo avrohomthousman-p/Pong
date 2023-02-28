@@ -8,15 +8,20 @@ import java.util.Timer;
  * Tracks the location and direction of the ball on the screen.
  */
 public class BallTracker {
-    public final int HEIGHT = 40;
-    public final int WIDTH = 40;
+    public static final int HEIGHT = 40;
+    public static final int WIDTH = 40;
     public double currentX;
     public double currentY;
     public double xVelocity;
     public double yVelocity;
 
 
-    public BallTracker(){}
+    public BallTracker(){
+        currentX = MainFrame.WINDOW_WIDTH / 2.0;
+        currentY = MainFrame.WINDOW_HEIGHT / 2.0;
+        xVelocity = 4;
+        yVelocity = 4;
+    }
 
 
     public BallTracker(double startingX, double startingY, double xVelocity, double yVelocity){
