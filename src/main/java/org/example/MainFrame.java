@@ -23,6 +23,7 @@ public class MainFrame {
         setupStatusPanel();
 
         //TODO: add components
+        window.add(new GamePanel(), BorderLayout.CENTER);
 
 
 

@@ -11,8 +11,12 @@ import java.awt.geom.Ellipse2D;
  * JPanel that runs the game in it.
  */
 public class GamePanel extends JPanel {
+    static final int BALL_HEIGHT = 40;
+    static final int BALL_WIDTH = 40;
+    private final BallSize ballSize = new BallSize(BALL_WIDTH, BALL_HEIGHT);
+    private final BallLocation ballLocation = new BallLocation();
+    private Ellipse2D ball;
     private final Timer timer;
-    private final BallTracker ball;
 
 
 
@@ -20,12 +24,13 @@ public class GamePanel extends JPanel {
         this.timer = new Timer(10, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO: move ball
+                //TODO: make ball bounce if at the edge of the screen
+                ballLocation.move();
+                ball.setFrame(ballLocation, ballSize);
                 repaint();
             }
         });
 
-        ball = new BallTracker();
     }
 
 
@@ -34,8 +39,10 @@ public class GamePanel extends JPanel {
         super.paintComponent(g);
 
         Graphics2D g2D = (Graphics2D) g;
-        Ellipse2D ballDrawing = new Ellipse2D.Double();
-        g2D.fill(ballDrawing);
+        ball = new Ellipse2D.Double(ballLocation.getX(), ballLocation.getY(),
+                ballSize.getWidth(), ballSize.getHeight());
+
+        g2D.fill(ball);
 
         timer.start();
     }
