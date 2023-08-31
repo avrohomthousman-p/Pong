@@ -50,6 +50,7 @@ public class GameWindow extends JFrame {
      */
     private class GamePanel extends JPanel {
         Ball ball = new Ball();
+        Paddle paddle = new Paddle();
 
         public GamePanel(){
             this.setBackground(Color.BLACK);
@@ -62,6 +63,7 @@ public class GameWindow extends JFrame {
 
             g.setColor(Color.WHITE);
             g.fillOval(ball.x, ball.y, Ball.BALL_WIDTH, Ball.BALL_HEIGHT);
+            g.fillRect(paddle.x, paddle.y, Paddle.PADDLE_WIDTH, Paddle.PADDLE_HEIGHT);
         }
     }
 }
