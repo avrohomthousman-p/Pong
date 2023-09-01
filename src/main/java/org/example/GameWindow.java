@@ -2,21 +2,26 @@ package org.example;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
 
 /**
  * The main window for the game of pong
  */
 public class GameWindow extends JFrame {
-    private JLabel score;
+    public static final int SCREEN_WIDTH = 600;
+    public static final int SCREEN_HEIGHT = 600;
+    private JLabel scoreDisplay;
+    private int score = 0;
     private JButton newGameBtn;
     private JPanel gamePanel;
 
 
 
     public GameWindow(){
-        this.setSize(600, 500);
+        this.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setTitle("Pong");
 
@@ -35,14 +40,25 @@ public class GameWindow extends JFrame {
     private void setupStatusBar(){
         JPanel statusBar = new JPanel();
 
-        score = new JLabel("Score = 0");
-        statusBar.add(score);
+        scoreDisplay = new JLabel("Score = " + score);
+        statusBar.add(scoreDisplay);
 
         newGameBtn = new JButton("New Game");
+        newGameBtn.setFocusable(false);
         statusBar.add(newGameBtn);
 
         this.add(statusBar, BorderLayout.NORTH);
     }
+
+
+    /**
+     * Resets the score display in the status bar
+     */
+    private void setScore(){
+        this.scoreDisplay.setText("Score = " + score);
+    }
+
+
 
 
     /**
@@ -52,8 +68,61 @@ public class GameWindow extends JFrame {
         Ball ball = new Ball();
         Paddle paddle = new Paddle();
 
+        Timer timer;
+
         public GamePanel(){
             this.setBackground(Color.BLACK);
+
+            this.addMouseWheelListener(new MouseAdapter() {
+                @Override
+                public void mouseWheelMoved(MouseWheelEvent e) {
+                    movePaddle(e.getPreciseWheelRotation() * 12);
+                }
+            });
+
+
+
+            //FIXME: doesnt work for some reason
+            this.addKeyListener(new KeyAdapter() {
+                @Override
+                public void keyPressed(KeyEvent e) {
+                    int isUp;
+
+                    if(e.getKeyCode() == KeyEvent.VK_KP_UP){
+                        isUp = 1;
+                    }
+                    else if(e.getKeyCode() == KeyEvent.VK_KP_DOWN){
+                        isUp = -1;
+                    }
+                    else {
+                        System.out.println("other key");
+                        return;
+                    }
+
+
+                    movePaddle(50 * isUp);
+                }
+            });
+
+
+            this.requestFocus(false);
+        }
+
+
+        /**
+         * Moves the paddle the specified amount
+         * @param distance the distance the paddle should be moved, negative means up
+         */
+        private void movePaddle(double distance){
+            double position = paddle.y + distance;
+
+            //ensure we don't move off the screen
+            position = Math.min(position, (SCREEN_HEIGHT - Paddle.PADDLE_HEIGHT));
+            position = Math.max(0, position);
+
+            paddle.y = (int) position;
+
+            repaint();
         }
 
 
